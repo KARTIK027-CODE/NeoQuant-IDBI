@@ -47,4 +47,4 @@ This prototype uses mock LLM responses. Production version is designed for:
 - PostgreSQL for persistent conversation memory
 
 ## Team
-Built for IDBI Bank Hackathon 2025
+Built for IDBI Bank Hackathon 2026
