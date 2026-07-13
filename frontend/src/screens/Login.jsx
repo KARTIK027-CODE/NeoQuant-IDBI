@@ -5,9 +5,7 @@ import './Login.css';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3001/api/v1';
 
 const DEMO_PROFILES = [
-  { id: 'retail', label: 'Ramesh Kumar',  desc: 'Retail · Conservative · ₹1.2L portfolio' },
-  { id: 'mass',   label: 'Priya Mehta',   desc: 'Mass · Moderate · ₹4.8L portfolio' },
-  { id: 'hni',    label: 'Arvind Subramanian', desc: 'HNI · Aggressive · ₹24.5L portfolio' },
+  { id: 'retail', label: 'Ramesh Kumar',  desc: 'Retail · Conservative · ₹1.2L portfolio' }
 ];
 
 export default function LoginScreen({ onLogin }) {

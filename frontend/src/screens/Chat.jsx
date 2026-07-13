@@ -426,29 +426,21 @@ export default function ChatScreen({ authToken, profileId }) {
           </div>
         </div>
 
-        {didError && (
-          <div className="avatar-error-banner">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: '12px', height: '12px', marginRight: '6px', flexShrink: 0 }}>
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01" />
-            </svg>
-            <span>{didError}</span>
-          </div>
-        )}
-
-        {videoUrl ? (
-          <video
-            ref={videoRef}
-            src={videoUrl}
-            className="did-avatar-video-render"
-            autoPlay
-            playsInline
-            controls={false}
-          />
-        ) : (
-          <div className="fallback-avatar-lottie">
-            <img src="/aria-portrait.png" alt="ARIA Portrait" className="fallback-portrait" />
-          </div>
-        )}
+        <video
+          ref={videoRef}
+          src={videoUrl || "/aria-talking.mp4"}
+          className="did-avatar-video-render"
+          autoPlay
+          loop={!videoUrl}
+          muted
+          playsInline
+          controls={false}
+          onEnded={() => {
+            if (videoUrl) {
+              setVideoUrl(null);
+            }
+          }}
+        />
 
         <div className="avatar-call-overlay-bottom">
           <span className="advisor-name-tag">Digital Advisor: ARIA</span>
