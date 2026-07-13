@@ -113,13 +113,13 @@ export default function LoginScreen({ onLogin }) {
         </div>
       </div>
 
-      {/* ARIA Avatar */}
+      {/* ARIA Portrait */}
       <div className="login-avatar-section">
         <div className="login-avatar-container">
-          <Avatar state={avatarState} />
+          <img src="/aria-portrait.png" alt="ARIA Portrait" />
         </div>
-        <div className="login-aria-name">ARIA</div>
-        <div className="login-aria-desc">AI Wealth Advisor · SEBI Compliant</div>
+        <div className="login-aria-name">WealthMate AI</div>
+        <div className="login-aria-desc">Digital Wealth Advisor · SEBI Registered</div>
       </div>
 
       {/* Form */}

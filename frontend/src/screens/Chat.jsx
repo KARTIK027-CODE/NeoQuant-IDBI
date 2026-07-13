@@ -96,6 +96,48 @@ export default function ChatScreen({ authToken, profileId }) {
     msgsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
+
+  const toggleListening = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser. Please use Chrome or Safari.");
+      return;
+    }
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = lang;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInputText(transcript);
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    }
+  };
+
   // Load Initial Greeting
   useEffect(() => {
     resetChat();
@@ -519,6 +561,21 @@ export default function ChatScreen({ authToken, profileId }) {
           onChange={(e) => setInputText(e.target.value)}
           disabled={onboardingActive}
         />
+        <button
+          type="button"
+          onClick={toggleListening}
+          className={`chat-mic-btn ${isListening ? 'listening' : ''}`}
+          title={isListening ? "Stop listening" : "Start speaking"}
+          disabled={onboardingActive}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="chat-mic-icon" style={{ width: '16px', height: '16px' }}>
+            {isListening ? (
+              <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+            ) : (
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z M19 10v1a7 7 0 0 1-14 0v-1 M12 18v4 M8 22h8" />
+            )}
+          </svg>
+        </button>
         <button 
           type="submit" 
           className="chat-submit-btn-arrow"
