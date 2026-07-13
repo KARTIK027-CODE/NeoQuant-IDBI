@@ -383,7 +383,7 @@ export default function ChatScreen({ authToken, profileId }) {
         <div className="header-left">
           <div className="idbi-logo-mini">IDBI</div>
           <div>
-            <div className="avatar-header-title">ARIA Advisor</div>
+            <div className="avatar-header-title">WealthMate AI</div>
             <div className="avatar-header-status">
               <span className="live-status-dot" />
               {isGeneratingVideo ? 'Generating response...' : 'Online (NeerjaNeural)'}
@@ -412,6 +412,17 @@ export default function ChatScreen({ authToken, profileId }) {
 
       {/* Main Avatar / Video Display */}
       <div className="avatar-display-section">
+        {/* Live Call Overlay Badges */}
+        <div className="avatar-call-overlay-top">
+          <div className="avatar-call-badge live">
+            <span className="live-status-dot-active" />
+            <span>SECURE VIDEO CONNECT</span>
+          </div>
+          <div className="avatar-call-badge bandwidth">
+            <span>HD 1080p</span>
+          </div>
+        </div>
+
         {videoUrl ? (
           <video
             ref={videoRef}
@@ -423,17 +434,15 @@ export default function ChatScreen({ authToken, profileId }) {
           />
         ) : (
           <div className="fallback-avatar-lottie">
-            {/* Lottie fallback representation */}
-            <div className="pulse-visualizer">
-              <div className="pulse-circle" />
-              <div className="pulse-circle delay-1" />
-              <div className="pulse-circle delay-2" />
-            </div>
             <img src="/aria-portrait.png" alt="ARIA Portrait" className="fallback-portrait" />
           </div>
         )}
-        <div className="stage-overlay-bottom">
-          <div className="stage-gradient" />
+
+        <div className="avatar-call-overlay-bottom">
+          <span className="advisor-name-tag">Digital Advisor: ARIA</span>
+          <div className="sound-waves-indicator">
+            {isGeneratingVideo && <div className="spinner-mini" />}
+          </div>
         </div>
       </div>
 

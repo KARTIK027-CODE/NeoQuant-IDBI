@@ -107,18 +107,18 @@
 /* Avatar Display Section */
 .avatar-display-section {
   position: relative;
-  height: 190px;
-  background: #030807;
+  height: 270px; /* Increased from 190px for FaceTime visual prominence */
+  background: #090e15;
   overflow: hidden;
   flex-shrink: 0;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 3px solid var(--teal-border);
 }
 
 .did-avatar-video-render {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 10%;
+  object-position: center 15%;
 }
 
 .fallback-avatar-lottie {
@@ -131,51 +131,82 @@
 }
 
 .fallback-portrait {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--teal);
-  box-shadow: var(--shadow-lg);
-  z-index: 2;
-}
-
-.pulse-visualizer {
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  z-index: 1;
-}
-
-.pulse-circle {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--teal);
-  opacity: 0.15;
-  animation: avatar-pulse-wave 2.5s infinite linear;
-}
-
-.pulse-circle.delay-1 { animation-delay: 0.8s; }
-.pulse-circle.delay-2 { animation-delay: 1.6s; }
-
-@keyframes avatar-pulse-wave {
-  0% { transform: scale(0.65); opacity: 0.35; }
-  50% { opacity: 0.15; }
-  100% { transform: scale(1.3); opacity: 0; }
-}
-
-.stage-overlay-bottom {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 40px;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.stage-gradient {
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6));
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+/* Call Overlay Overlays */
+.avatar-call-overlay-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.avatar-call-badge {
+  background: rgba(13, 17, 23, 0.65);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.avatar-call-badge.live {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.live-status-dot-active {
+  width: 6px;
+  height: 6px;
+  background-color: #10b981;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-dot-anim 1.2s infinite;
+}
+
+.avatar-call-overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: linear-gradient(to top, rgba(13, 17, 23, 0.95), transparent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.advisor-name-tag {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.spinner-mini {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
 }
 
 /* Messages Scroll Area */
@@ -230,25 +261,26 @@
 }
 
 .message-text-card {
-  padding: 10px 14px;
-  border-radius: var(--radius-md);
-  font-size: 12.5px;
-  line-height: 1.5;
+  padding: 12px 15px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--text-primary);
-  box-shadow: var(--shadow-xs);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
 }
 
 .assistant .message-text-card {
   background: var(--surface);
   border-top-left-radius: 2px;
+  border-left: 3px solid var(--teal);
 }
 
 .user .message-text-card {
-  background: var(--primary);
+  background: var(--teal);
   color: #ffffff;
   border-top-right-radius: 2px;
-  border-color: var(--primary-dark);
+  border-color: var(--teal-dark);
 }
 
 .sebi-disclaimer-sub {
@@ -387,21 +419,25 @@
 
 .tray-btn-onboard {
   width: 100%;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--primary-border);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1.5px dashed var(--primary-border);
   background: var(--primary-faint);
   color: var(--primary-dark);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 11.5px;
   cursor: pointer;
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
+  margin-bottom: 12px;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .tray-btn-onboard:hover {
-  background: var(--primary);
-  color: #fff;
+  background: var(--primary-light);
+  border-color: var(--primary);
 }
 
 .chat-quick-chips {
