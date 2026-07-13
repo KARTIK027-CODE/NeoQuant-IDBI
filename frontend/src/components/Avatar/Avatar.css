@@ -1,0 +1,156 @@
+/*
+ * Avatar component — adapts to light/white background
+ */
+
+.avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.avatar-svg-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-svg {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 2px 8px rgba(0,48,135,0.12));
+  transition: filter 0.3s ease;
+}
+
+/* ── Head Animation States ─────────────────────────────────── */
+.avatar-head {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.avatar-head.thinking {
+  transform: rotate(-4deg);
+  animation: think-tilt 2s ease-in-out infinite;
+}
+
+.avatar-head.talking {
+  animation: talk-nod 0.5s ease-in-out infinite alternate;
+}
+
+.avatar-head.happy {
+  animation: happy-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes think-tilt {
+  0%, 100% { transform: rotate(-4deg); }
+  50%       { transform: rotate(4deg); }
+}
+
+@keyframes talk-nod {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-2px); }
+}
+
+@keyframes happy-bounce {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* ── State Label ───────────────────────────────────────────── */
+.avatar-state-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border-strong);
+  color: var(--text-muted);
+  background: var(--surface);
+  transition: all 0.3s ease;
+}
+
+.avatar-state-label.thinking {
+  color: var(--navy);
+  background: var(--navy-faint);
+  border-color: var(--navy-light);
+}
+
+.avatar-state-label.talking {
+  color: var(--green);
+  background: var(--green-bg);
+  border-color: var(--green-border);
+}
+
+.avatar-state-label.happy {
+  color: var(--green);
+  background: var(--green-bg);
+  border-color: var(--green-border);
+}
+
+.avatar-state-label.concerned {
+  color: var(--amber);
+  background: var(--amber-bg);
+  border-color: #fde68a;
+}
+
+/* ── Sound Waves ───────────────────────────────────────────── */
+.sound-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sound-waves.active {
+  opacity: 1;
+}
+
+.sound-wave-bar {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--navy);
+  animation: none;
+  height: 4px;
+}
+
+.sound-waves.active .sound-wave-bar {
+  animation: wave-bar 0.6s ease-in-out infinite alternate;
+}
+
+.sound-wave-bar:nth-child(1) { animation-delay: 0.0s; height: 6px; }
+.sound-wave-bar:nth-child(2) { animation-delay: 0.1s; height: 12px; }
+.sound-wave-bar:nth-child(3) { animation-delay: 0.2s; height: 16px; }
+.sound-wave-bar:nth-child(4) { animation-delay: 0.1s; height: 12px; }
+.sound-wave-bar:nth-child(5) { animation-delay: 0.0s; height: 6px; }
+
+@keyframes wave-bar {
+  from { transform: scaleY(0.4); }
+  to   { transform: scaleY(1.2); }
+}
+
+/* ── Thinking Dots ─────────────────────────────────────────── */
+.thinking-dots {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.thinking-dots.active {
+  opacity: 1;
+}
+
+.thinking-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--navy);
+  animation: typing-dot 1.2s ease-in-out infinite;
+}
+
+.thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dot:nth-child(3) { animation-delay: 0.4s; }
