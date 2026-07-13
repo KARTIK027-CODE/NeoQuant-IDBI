@@ -82,6 +82,7 @@ export default function ChatScreen({ authToken, profileId }) {
   const [auditLogs, setAuditLogs] = useState([]);
   const [activeRMCard, setActiveRMCard] = useState(null);
   const [activeWhyCard, setActiveWhyCard] = useState(null);
+  const [didError, setDidError] = useState(null);
 
   // Onboarding Assessment Flow State
   const [onboardingActive, setOnboardingActive] = useState(false);
@@ -164,6 +165,7 @@ export default function ChatScreen({ authToken, profileId }) {
     setActiveRMCard(null);
     setActiveWhyCard(null);
     setVideoUrl(null);
+    setDidError(null);
 
     const initialText = `Namaste ${customer.name}. I am ARIA, your IDBI Digital Wealth Advisor. I see your target goal is ${customer.goal} over a ${customer.horizon}-year horizon. Based on your ${customer.riskProfile} risk profile, how can I help you optimize your assets today?`;
 
@@ -203,10 +205,11 @@ export default function ChatScreen({ authToken, profileId }) {
         setVideoUrl(data.result_url);
         addAuditLog('D-ID Video Generated', `Rendered talking avatar video for audio stream`);
       } else {
-        throw new Error('D-ID failed or bypassed');
+        throw new Error(data.message || 'D-ID failed or bypassed');
       }
     } catch (err) {
       console.warn('[D-ID Fallback to Browser Speech]:', err.message);
+      setDidError(err.message.includes('402') ? 'D-ID API Key credits exhausted (402 Payment Required)' : err.message);
       // Fallback: Use Browser Speech Synthesis
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
@@ -422,6 +425,15 @@ export default function ChatScreen({ authToken, profileId }) {
             <span>HD 1080p</span>
           </div>
         </div>
+
+        {didError && (
+          <div className="avatar-error-banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: '12px', height: '12px', marginRight: '6px', flexShrink: 0 }}>
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01" />
+            </svg>
+            <span>{didError}</span>
+          </div>
+        )}
 
         {videoUrl ? (
           <video
