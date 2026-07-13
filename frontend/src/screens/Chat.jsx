@@ -49,6 +49,26 @@ const LANGUAGES = [
   { code: 'te-IN', label: 'తెలుగు', voice: 'te-IN-ShrutiNeural' },
 ];
 
+const QUICK_PROMPTS = [
+  'How is my portfolio doing?',
+  'Should I increase my SIP?',
+  'Recommend new funds for me',
+  'Give me tax planning tips',
+  'Connect me to a Relationship Manager',
+];
+
+function renderMarkdown(raw) {
+  if (!raw) return '';
+  const e = raw
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return e
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/^&gt;\s(.*)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/\n/g,'<br/>');
+}
+
 export default function ChatScreen({ authToken, profileId }) {
   const customer = CUSTOMERS[profileId] || CUSTOMERS.retail;
 
